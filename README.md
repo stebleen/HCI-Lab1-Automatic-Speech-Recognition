@@ -6,24 +6,23 @@ Install SpeechRecognition
 
     pip install SpeechRecognition
 Install PocketSphinx  
-> Download right binary library from [.whl file about PocketSphinx](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pocketsphinx)
-> 
-> Install .whl file in command window using the following command: 
-> ```
-> python -m pip install pocketsphinx‑downloaded_wheel.whl
-> ```
+
+```
+# Download right binary library from [.whl file about PocketSphinx](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pocketsphinx)
+# Install .whl file in command window using the following command: 
+python -m pip install pocketsphinx‑downloaded_wheel.whl
+```
 Configure Pycharm
-> Edit pyvenv.cfg in Pycharm and restart Pycharm 
-> ```
-> include-system-site-packages = true
-> ```
+```
+# Edit pyvenv.cfg in Pycharm and restart Pycharm 
+include-system-site-packages = true
+```
 Install PyAudio
-> Download right binary library from [.whl file about PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
-> 
-> Install .whl file in command window using the following command: 
-> ```
-> python -m pip install PyAudio‑downloaded_wheel.whl
-> ```
+```
+# Download right binary library from [.whl file about PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio)
+# Install .whl file in command window using the following command:
+python -m pip install PyAudio‑downloaded_wheel.whl
+```
 Install PyQt5
 
     pip install PyQt5
@@ -53,11 +52,20 @@ Pygame is a cross platform Python library that is a set of Python program module
     from pygame import mixer
     def playMusic():
       mixer.init()
-      mixer.music.load(r"C:\Users\深归\Music\Of Course.mp3")
+      mixer.music.load(r"C:\Users\深归\Music\Of_Course.mp3")
       mixer.music.play()
       # 播放5秒
       # time.sleep(5)
       # mixer.music.stop()
+At first, the author used the function os. system() in the os module to process audio files, but some issues arose.
+
+The first issue is that MP3 audio files cannot be read and garbled code will be displayed.
+The solution is to modify the pycharm configuration.
+
+    File->Settings->Editor->File Encodings
+    # 把Global Encoding设置成GBK即可
+The second issue is the existence of waiting time. Specifically, after playing the video or turning off the audio software midway, it takes 5 to 10 seconds to continue reading the microphone for the next time. The reason for this situation has not yet been resolved by the author, so the author has switched to using the pygame module to implement this function.
+### 4.2 The function of playing video
 
 
 
