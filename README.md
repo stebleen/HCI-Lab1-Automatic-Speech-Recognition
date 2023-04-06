@@ -1,7 +1,7 @@
 # Lab1-Automatic-Speech-Recognition
 This project is a language recognition program based on Python language.In this project, we will recognize the voice input by the user and complete some corresponding actions, such as playing music, etc.
 ## 1. Preparation
-### 1.1 Related configurations and Python libraries that need to be installed
+### 1.1 Related Configurations and Python Libraries That Need to be Installed
 Install SpeechRecognition
 
     pip install SpeechRecognition
@@ -32,21 +32,23 @@ Install pywin32(We need to use the win32 module)
 Install pygame
 
     pip install pygame
-### 1.2 Operating environment
+### 1.2 Operating Environment
 The development environment for this project is the Windows system, and the Python version used is Python 3.9.
 ## 2. Brief Introduction
 This project uses the Python library PyQt5 based on the graphical programming framework Qt5 to build a graphical interface and uses speech_ Recognition, a third-party library, accesses and reads the voice in the microphone. By recognizing speech, complete the corresponding operations.
 ## 3. Project Structure
-### 3.1 Architecture of an ASR system
+### 3.1 Architecture of an ASR System
 ![image](https://user-images.githubusercontent.com/126655217/230094301-3ea62f3d-3b20-45f5-b12b-fa5f565331f7.png)
-### 3.2 Program structure
+### 3.2 Program Structure
 This project mainly consists of several files: asr. py, asrInterface. py, and guessTheWord. py.
 The asrInterface.py file is mainly used to implement graphical interfaces.
 The guissTheWord.py file is mainly used to recognize speech obtained from microphones.
 The asr. py file is mainly used to call various functions and classes.
-![image](https://user-images.githubusercontent.com/126655217/230109805-de6b7c07-8085-4e8b-bf77-a461620ddf83.png)
-## 4. Main functions and code implementation
-### 4.1 The function of playing music
+
+![image](https://user-images.githubusercontent.com/126655217/230425168-14da0b9a-8859-45c5-884d-546cad2c7b2d.png)
+## 4. Main Functions and Code Implementation
+Including the main functions, corresponding code implementation, and problems encountered during the experimental process, as well as solutions and methods.
+### 4.1 The Function of Playing Music
 Pygame is a cross platform Python library that is a set of Python program modules used to develop game software, developed based on the SDL library. Allowing users to create feature rich games and multimedia programs in Python programs, Pygame is a highly portable module that supports multiple operating systems. Pygame includes the processing of images and sounds. The purpose of using pygame in this project is to play music files.
 
     from pygame import mixer
@@ -57,7 +59,7 @@ Pygame is a cross platform Python library that is a set of Python program module
       # 播放5秒
       # time.sleep(5)
       # mixer.music.stop()
-At first, the author used the function os. system() in the os module to process audio files, but some issues arose.
+At first, the author used the method `os.system()` in the os module to process audio files, but some issues arose.
 
 The first issue is that MP3 audio files cannot be read and garbled code will be displayed.
 The solution is to modify the pycharm configuration.
@@ -65,7 +67,194 @@ The solution is to modify the pycharm configuration.
     File->Settings->Editor->File Encodings
     # 把Global Encoding设置成GBK即可
 The second issue is the existence of waiting time. Specifically, after playing the video or turning off the audio software midway, it takes 5 to 10 seconds to continue reading the microphone for the next time. The reason for this situation has not yet been resolved by the author, so the author has switched to using the pygame module to implement this function.
-### 4.2 The function of playing video
 
+The author imports the mixer object from the pygame package in the program, and uses the `mixer.music.load()` method to load the audio file and the `mixer.music.play()` method to play the audio file.
+
+But there is still a problem. After starting to play music, the program continues to execute without waiting for the music to finish playing (the main process creates a sub process to open a new window, and the main process immediately continues to execute after creating the sub process). To solve this problem, the author uses the following code when calling the function. By entering any key, the music pauses and the microphone reads the next command.
+
+    playMusic()
+    # 音乐仍然在进行，但麦克风直接读取下一条命令
+    # 故采用以下代码解决此问题
+    # 输入任意键音乐暂停播放，麦克风读取下一条命令
+    seconds = input()
+    mixer.music.stop()
+### 4.2 The Function of Playing Video
+The author uses the `os.system()` method in the os module to open video files.
+
+    def playVideo():
+        # startfile(r"D:\UpupooWallpaper\2000308532\video_2000308532.mp4")
+        os.system(r'D:\UpupooWallpaper\2000308532\video_2000308532.mp4')
+The author initially used the method `startfile()` in the Python standard library OS to open video files. However, there have also been situations where the main process creates a child process to open a new window and continues execution without waiting for the window to exit. Therefore, the `os.system()` method was used instead, but this issue has not been resolved. So, based on the playback time `times`  of the video file,  `time.sleep (times)`  is used to pause the main process and resume the main process after the video playback is completed.
+### 4.3 The function of Opening Notepad
+The author uses the `os.system()` method in the os module to open notepad.
+
+    def openFile():
+        os.system('notepad.exe')
+
+In terms of method selection, the author has considered the `os.startfile()` method and the `os.system()` method. The `os.system()` method will wait for the notepad window to exit before continuing execution (the main process opens a new window, the original window enters a sleep state, and when the new window is closed, the main process wakes up the original window again). The `os.startfile()` method opens a window and continues execution without waiting for the window to exit (the main process creates a child process to open a new window, and once the child process is created, the main process immediately continues execution). Therefore, after comprehensive consideration, the author has decided to use the `os.system()` method.
+### 4.4 Voice Transcription Function Recorded from Microphone
+The main function of this method is to transcribe speech from recordings recorded by the "microphone".
+This method returns a dictionary containing three keys:
+
+'success': Boolean value indicating whether the API request was successful.
+
+'error': If no error occurred, it is `None` ; otherwise, if the API cannot be accessed or speech cannot be recognized, it is a string containing the error message.
+
+'transcription': If the speech cannot be transcribed, it is `None` , otherwise it is a string containing the transcribed text.
+
+    def recognize_speech_from_mic(recognizer, microphone):
+        # check that recognizer and microphone arguments are appropriate type
+        if not isinstance(recognizer, sr.Recognizer):
+            raise TypeError("`recognizer` must be `Recognizer` instance")
+
+        if not isinstance(microphone, sr.Microphone):
+            raise TypeError("`microphone` must be `Microphone` instance")
+
+        # adjust the recognizer sensitivity to ambient noise and record audio
+        # from the microphone
+        with microphone as source:
+            recognizer.adjust_for_ambient_noise(source)
+            audio = recognizer.listen(source)
+
+        # set up the response object
+        response = {
+            "success": True,
+            "error": None,
+            "transcription": None
+        }
+
+        # try recognizing the speech in the recording
+        # if a RequestError or UnknownValueError exception is caught,
+        #     update the response object accordingly
+        try:
+            response["transcription"] = recognizer.recognize_sphinx(audio)
+        except sr.RequestError:
+            # API was unreachable or unresponsive
+            response["success"] = False
+            response["error"] = "API unavailable"
+        except sr.UnknownValueError:
+            # speech was unintelligible
+            response["error"] = "Unable to recognize speech"
+
+        return response
+### 4.5 Implement Voice Input and Recognition Functions
+This method is used to achieve functions such as playing music, videos, and opening files.
+    
+    from guessTheWord import recognize_speech_from_mic
+    import win32com.client as win
+    def get_mic(myWindow):
+        # 此函数用于实现播放音乐、视频和打开文件等功能
+
+        while True:
+
+            print('开始说话吧！')
+        
+            # Working with Microphones
+            recognizer = sr.Recognizer()
+            microphone = sr.Microphone()
+
+            # 语音提示开始说话
+            speak = win.Dispatch("SAPI.SpVoice")  # 微软语音接口
+            speak.Speak("Let's start talking!")
+
+            # 此函数用于实现播放音乐、视频和打开文件等功能
+            # Working with Microphones
+            myWindow.ui.words("正在说话中.../Speaking...")
+            guess = recognize_speech_from_mic(recognizer, microphone)
+            print("You said: {}".format(guess["transcription"]))
+            myWindow.ui.words("Your conversation: " + guess["transcription"])
+
+            if guess["transcription"] == 'stop':
+                return
+            if guess["transcription"] == 'play music':
+                speak = win.Dispatch("SAPI.SpVoice")
+                speak.Speak("About to play music")
+                playMusic()
+                # 音乐仍然在进行，但麦克风直接读取下一条命令
+                # 故采用以下代码解决此问题
+                # 输入任意键音乐暂停播放，麦克风读取下一条命令
+                seconds = input()
+                mixer.music.stop()
+            elif guess["transcription"] == 'play video':
+                speak = win.Dispatch("SAPI.SpVoice")
+                speak.Speak("About to play video")
+                playVideo()
+                # time.sleep(5)
+            elif guess["transcription"] == 'open notepad':
+                speak = win.Dispatch("SAPI.SpVoice")
+                speak.Speak("About to open file")
+                openFile()
+            else:
+                myWindow.ui.words("Sorry, I didn't catch that.")
+                speak = win.Dispatch("SAPI.SpVoice")
+                speak.Speak("Sorry, I didn't catch that.")
+This method references the `win32com.client` module and the `recognize_speech_from_mic()` method in the `guessTheWord.py` file. The `win32com.client` module is used to provide voice prompts to users.          
+### 4.6 Method of Implementing Multithreading
+At the beginning, the author did not create multiple threads, so there was a situation where a window could only pop up after speaking when loading the interface. After searching for information, the author found that it is possible to create multiple threads, use the main thread to update the interface, use sub threads to process data in real-time, and finally display the results on the interface. This will solve the problems that occurred before.
+
+    class myThread(QThread):
+   
+        def __init__(self, myWindow):
+            super(myThread, self).__init__()
+            self.myWindow = myWindow
+
+        def run(self):
+            get_mic(self.myWindow)
+            
+    # ...
+    appThread=myThread(application)
+    appThread.start()
+### 4.7 Implementation of Graphical Interface
+This method is mainly implemented using `PyQt5`, a third-party library.
+
+    class Ui_MainWindow(object):
+        def setupUi(self, MainWindow):
+        
+            # ...
+        
+            # label_5
+            self.label_5 = QtWidgets.QLabel(self.centralwidget)
+            self.label_5.setGeometry(QtCore.QRect(60, 400, 201, 21))    # 设置当前QWidget的显示位置和大小
+            font = QtGui.QFont()    # 创建字体对象
+            font.setFamily("Calibri")   # 设置字体类型
+            font.setPointSize(12)   # 设置文字大小
+            self.label_5.setFont(font)  # 设置字体
+            self.label_5.setStyleSheet("color: rgb(100, 200, 200);")    # 设置控件的样式(QSS)
+            self.label_5.setWordWrap(True)  # 设置Label标签文本换行显示
+            self.label_5.setObjectName("label_5")
+        
+            #...
+            
+        # ...
+        
+        def words(self, mywords):
+            # 在窗口上显示说的话
+            _translate = QtCore.QCoreApplication.translate
+            self.label_5.setText(_translate("MainWindow", mywords))  
+            
+    class myWindow(QtWidgets.QMainWindow):
+
+        def __init__(self):
+            # 实例化类，用来创建窗口
+            super(myWindow, self).__init__()
+            self.myCommand = " "
+            self.ui = Ui_MainWindow()
+            self.ui.setupUi(self)
+            
+    # ...
+    
+    # 不能正确显示（文字不能完全显示出来）的解决
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+
+    # 实例化了一个应用程序对象QApplication()
+    app = QtWidgets.QApplication([])
+    application = myWindow()
+    application.show()
+    
+    # ...
+    
+    sys.exit(app.exec())
+The author encountered an issue of incomplete text display when implementing a graphical interface. After consulting the materials, the author successfully solved this problem by adding the code `QtCore. QCoreApplication. setAttribute (QtCore. Qt. AA-EnableHighDpiScaling)`.
+## 5. Function Implementation Screenshot
 
 
