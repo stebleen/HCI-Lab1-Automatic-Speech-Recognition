@@ -324,7 +324,7 @@ Modifications to the GUI (added control label_5):
         self.label_5.setWordWrap(True)  # 设置Label标签文本换行显示
         self.label_5.setObjectName("label_5")   # 为控件设置一个名称，当作控件的ID来使用。
         
-   def words(self, mywords):
+    def words(self, mywords):
         # 在窗口上显示说的话
         _translate = QtCore.QCoreApplication.translate
         self.label_5.setText(_translate("MainWindow", mywords))
