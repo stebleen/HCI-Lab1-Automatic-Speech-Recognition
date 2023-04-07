@@ -305,5 +305,29 @@ After consulting materials, the author learned that there are many methods for t
 
 5. Model application: Apply the trained model to actual scenarios.
 ## 7. Code Modification
+Contains modifications to the existing GUI and code.
+
+Modifications to the GUI (added control label_5):
+
+    def setupUi(self, MainWindow):
+    
+        # ...
+    
+        # label_5
+        self.label_5 = QtWidgets.QLabel(self.centralwidget) #创建label_5控件
+        self.label_5.setGeometry(QtCore.QRect(60, 400, 201, 21))    # 设置当前QWidget的显示位置和大小
+        font = QtGui.QFont()    # 创建字体对象
+        font.setFamily("Calibri")   # 设置字体类型
+        font.setPointSize(12)   # 设置文字大小
+        self.label_5.setFont(font)  # 设置字体
+        self.label_5.setStyleSheet("color: rgb(100, 200, 200);")    # 设置控件的样式(QSS)
+        self.label_5.setWordWrap(True)  # 设置Label标签文本换行显示
+        self.label_5.setObjectName("label_5")   # 为控件设置一个名称，当作控件的ID来使用。
+        
+   def words(self, mywords):
+        # 在窗口上显示说的话
+        _translate = QtCore.QCoreApplication.translate
+        self.label_5.setText(_translate("MainWindow", mywords))
+Modifications to other code: added three methods for playing music, playing videos, and opening files, and added multithreading processing. (The specific code has been shown before)
 ## 8. Video of Using Speech Recognition Mini Assistant
 
