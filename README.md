@@ -256,5 +256,31 @@ This method is mainly implemented using `PyQt5`, a third-party library.
     sys.exit(app.exec())
 The author encountered an issue of incomplete text display when implementing a graphical interface. After consulting the materials, the author successfully solved this problem by adding the code `QtCore. QCoreApplication. setAttribute (QtCore. Qt. AA-EnableHighDpiScaling)`.
 ## 5. Function Implementation Screenshot
+Run the program and a window will appear:
+
+![image](https://user-images.githubusercontent.com/126655217/230517308-d3a6bc05-bac4-4ce3-b996-0c52c946dc3d.png)
+
+The program voice plays "let's start taiking!" and displays:
+
+![image](https://user-images.githubusercontent.com/126655217/230518434-0c954535-4b10-46b8-ad8f-c218f152d0f6.png)
+
+After the user inputs "play music" into the microphone through voice, the program prompts "about to play music" and displays the user's voice input in text on the window. At the same time, the program starts playing music and displays:
+
+![image](https://user-images.githubusercontent.com/126655217/230519244-79c1ec0d-9394-47cb-8bd3-3bbbd0ce7a6d.png)
+
+After the user inputs "play video" into the microphone through voice, the program prompts "about to play video" and displays the user's voice input in text on the window, displaying:
+
+![image](https://user-images.githubusercontent.com/126655217/230518834-057a5c58-f73d-4bbc-b387-9f90c287c2ae.png)
+![image](https://user-images.githubusercontent.com/126655217/230518917-7d4d17bd-b645-4d7f-adbf-b6ead6891b85.png)
+
+After the user inputs "open notepad" into the microphone through voice, the program prompts "about to open notepad" and displays the user's voice input in text on the window, displaying:
+
+![image](https://user-images.githubusercontent.com/126655217/230517766-350134f3-f642-4c91-b0fc-3f0a9309343a.png)
+![image](https://user-images.githubusercontent.com/126655217/230518037-78b739b4-ad38-4c88-b286-1ecc0f263601.png)
+
+## 6. Accuracy of Speech Recognition
+In this experiment, the `SpeedRecognition` module is used for speech recognition. The accuracy of speech recognition is relatively low.
+
+## 7. Code Modification
 
 
