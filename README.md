@@ -281,6 +281,29 @@ After the user inputs "open notepad" into the microphone through voice, the prog
 ## 6. Accuracy of Speech Recognition
 In this experiment, the `SpeedRecognition` module is used for speech recognition. The accuracy of speech recognition is relatively low.
 
-## 7. Code Modification
+还需要详细说明本实验的语音识别准确性！！！
 
+To improve the accuracy of speech recognition, we can start from the following aspects:
+
+1. Preprocess audio files, such as denoising, reducing sampling rate, etc., to improve speech quality.
+
+2. Use better speech recognition engines, such as Google Cloud Speech to Text, Microsoft Azure Speech Services, etc.
+
+3. Increase the size and diversity of the training dataset to improve the model's generalization ability.
+
+4. Optimize the model architecture and hyperparameter, such as using deeper neural networks, adjusting the learning rate, etc.
+
+After consulting materials, the author learned that there are many methods for training speech models, among which one commonly used method is to use deep learning models, such as convolutional neural networks (CNN), recurrent neural networks (RNN), and long short-term memory networks (LSTM). Specifically, the steps for training a speech model are as follows:
+
+1. Data preprocessing: including data cleaning, feature extraction, data enhancement, etc.
+
+2. Model construction: Select an appropriate deep learning model and initialize parameters.
+
+3. Model training: Train the model using a training dataset and optimize the model.
+
+4. Model evaluation: Use a test dataset to evaluate the model and calculate indicators such as accuracy and recall.
+
+5. Model application: Apply the trained model to actual scenarios.
+## 7. Code Modification
+## 8. Video of Using Speech Recognition Mini Assistant
 
