@@ -283,7 +283,7 @@ After the user inputs "open notepad" into the microphone through voice, the prog
 ## 6. Accuracy of Speech Recognition
 In this experiment, the `SpeedRecognition` module is used for speech recognition. The accuracy of speech recognition is relatively low.
 
-Considering the accuracy of speech recognition, when actually writing code, the author (I) plays music as long as the program recognizes "think", plays video when it recognizes "deal", and opens the file when it recognizes "oh". At this point, the accuracy can reach approximately 45%.
+Considering the accuracy of speech recognition, when actually writing code, the author (I) plays music as long as the program recognizes "think", plays video when it recognizes "deal", and opens the file when it recognizes "oh". At this point, the accuracy can reach approximately 40%.
 
 Here are some of the code that the author (I) actually used:
 
