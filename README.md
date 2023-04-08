@@ -165,6 +165,8 @@ This method is used to achieve functions such as playing music, videos, and open
             myWindow.ui.words("Your conversation: " + guess["transcription"])
 
             if guess["transcription"] == 'stop':
+                speak = win.Dispatch("SAPI.SpVoice")
+                speak.Speak("About to stop")
                 return
             if guess["transcription"] == 'play music':
                 speak = win.Dispatch("SAPI.SpVoice")
@@ -281,7 +283,38 @@ After the user inputs "open notepad" into the microphone through voice, the prog
 ## 6. Accuracy of Speech Recognition
 In this experiment, the `SpeedRecognition` module is used for speech recognition. The accuracy of speech recognition is relatively low.
 
-还需要详细说明本实验的语音识别准确性！！！
+Considering the accuracy of speech recognition, when actually writing code, the author (I) plays music as long as the program recognizes "think", plays video when it recognizes "deal", and opens the file when it recognizes "oh". At this point, the accuracy can reach approximately 45%.
+
+Here are some of the code that the author (I) actually used:
+
+    if guess["transcription"] == 'stop':
+        speak = win.Dispatch("SAPI.SpVoice")
+        speak.Speak("About to stop")
+        return
+
+    if 'think' in guess["transcription"]:
+    # if guess["transcription"] == 'play music':
+        speak = win.Dispatch("SAPI.SpVoice")
+        speak.Speak("About to play music")
+        playMusic()
+        
+        # ...
+           
+    elif 'deal' in guess["transcription"]:
+    # elif guess["transcription"] == 'play video':
+        speak = win.Dispatch("SAPI.SpVoice")
+        speak.Speak("About to play video")
+        playVideo()
+        time.sleep(5)
+    elif 'oh' in guess["transcription"]:
+    # elif guess["transcription"] == 'open file':
+        speak = win.Dispatch("SAPI.SpVoice")
+        speak.Speak("About to open file")
+        openFile()
+    else:
+        myWindow.ui.words("Sorry, I didn't catch that.")
+        speak = win.Dispatch("SAPI.SpVoice")
+        speak.Speak("Sorry, I didn't catch that.")
 
 To improve the accuracy of speech recognition, we can start from the following aspects:
 
@@ -329,5 +362,5 @@ Modifications to the GUI (added control label_5):
         _translate = QtCore.QCoreApplication.translate
         self.label_5.setText(_translate("MainWindow", mywords))
 Modifications to other code: added three methods for playing music, playing videos, and opening files, and added multithreading processing. (The specific code has been shown before)
-## 8. Video of Using Speech Recognition Mini Assistant
+
 
