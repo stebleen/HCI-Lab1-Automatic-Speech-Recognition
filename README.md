@@ -54,7 +54,7 @@ Pygame is a cross platform Python library that is a set of Python program module
     from pygame import mixer
     def playMusic():
       mixer.init()
-      mixer.music.load(r"C:\Users\深归\Music\Of_Course.mp3")
+      mixer.music.load("Of_Course.mp3")
       mixer.music.play()
       # 播放5秒
       # time.sleep(5)
@@ -82,8 +82,8 @@ But there is still a problem. After starting to play music, the program continue
 The author uses the `os.system()` method in the os module to open video files.
 
     def playVideo():
-        # startfile(r"D:\UpupooWallpaper\2000308532\video_2000308532.mp4")
-        os.system(r'D:\UpupooWallpaper\2000308532\video_2000308532.mp4')
+        # startfile("video_2000308532.mp4")
+        os.system('video_2000308532.mp4')
 The author initially used the method `startfile()` in the Python standard library OS to open video files. However, there have also been situations where the main process creates a child process to open a new window and continues execution without waiting for the window to exit. Therefore, the `os.system()` method was used instead, but this issue has not been resolved. So, based on the playback time `times`  of the video file,  `time.sleep (times)`  is used to pause the main process and resume the main process after the video playback is completed.
 ### 4.3 The function of Opening Notepad
 The author uses the `os.system()` method in the os module to open notepad.
